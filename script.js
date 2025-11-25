@@ -1318,21 +1318,16 @@ async function generateAISummaryAsync(videoData) {
     try {
         const { video } = videoData;
         const snippet = video.snippet;
-
+        
         const description = `Title: ${snippet.title}
 Channel: ${snippet.channelTitle}
 Description: ${snippet.description ? snippet.description.substring(0, 500) : 'No description available'}
 Duration: ${formatDuration(video.contentDetails?.duration)}`;
 
-        const response = await fetch('/api/ai', {   // correct for serverless
+        const response = await fetch('/api/ai', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({
-                description: description,
-                analysisType: 'summary',      // REQUIRED
-                title: snippet.title,         // REQUIRED
-                videoId: video.id             // RECOMMENDED
-            })
+            body: JSON.stringify({ description: description })
         });
 
         if (!response.ok) {
@@ -1347,6 +1342,5 @@ Duration: ${formatDuration(video.contentDetails?.duration)}`;
         return "Failed to generate AI summary.";
     }
 }
-
 
 
