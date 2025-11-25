@@ -1314,33 +1314,39 @@ const enhancedCSS = `
 document.head.insertAdjacentHTML('beforeend', enhancedCSS);
 
 
-async function generateAISummary(videoData, transcript) {
+async function generateAISummaryAsync(videoData) {
     try {
         const { video } = videoData;
         const snippet = video.snippet;
 
-        const prompt = `Please provide a comprehensive summary of this YouTube video:
-
-Title: ${snippet.title}
+        const description = `Title: ${snippet.title}
 Channel: ${snippet.channelTitle}
 Description: ${snippet.description ? snippet.description.substring(0, 500) : 'No description available'}
-Duration: ${formatDuration(video.contentDetails?.duration)}
-${transcript ? `\nTranscript: ${transcript.substring(0, 1000)}` : ''}
+Duration: ${formatDuration(video.contentDetails?.duration)}`;
 
-Please provide:
-1. A brief overview (2-3 sentences)
-2. Main topics covered (bullet points)
-3. Key takeaways (3-5 points)
-4. Target audience
+        const response = await fetch('/api/ai', {   // correct for serverless
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                description: description,
+                analysisType: 'summary',      // REQUIRED
+                title: snippet.title,         // REQUIRED
+                videoId: video.id             // RECOMMENDED
+            })
+        });
 
-Format the response clearly.`
+        if (!response.ok) {
+            const errorData = await response.json().catch(() => ({}));
+            throw new Error(errorData.message || `AI API error: ${response.status}`);
+        }
 
-        const response = await callGeminiAPI(prompt, 'summary');
-        return response;
+        const data = await response.json();
+        return data.summary || "No AI summary available.";
     } catch (error) {
-        console.error('AI Summary error:', error);
-        throw new Error('Failed to generate AI summary');
+        console.error("Error generating AI summary:", error);
+        return "Failed to generate AI summary.";
     }
 }
+
 
 
