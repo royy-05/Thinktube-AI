@@ -1,118 +1,98 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Thinktube AI</title>
-    <link rel="stylesheet" href="styles.css">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ThinkTube AI</title>
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="styles.css" />
+
+    <!-- Prevent caching on Vercel -->
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+    <meta http-equiv="Pragma" content="no-cache" />
+    <meta http-equiv="Expires" content="0" />
 </head>
 <body>
+
+    <!-- Background Shapes -->
     <div class="bg-shapes">
         <div class="shape shape-1"></div>
         <div class="shape shape-2"></div>
     </div>
 
+    <!-- Header -->
     <header>
         <nav class="logo">ThinkTube AI</nav>
-        <ul class="btn-section">
-        </ul>
+        <ul class="btn-section"></ul>
         <button class="btn-start">Login</button>
     </header>
 
+    <!-- Main Container -->
     <div class="container">
+        <!-- Hero Section -->
         <section class="hero">
             <h1>
-                AI-Powered <span class="gradient-text">YouTube Video</span><br>
+                AI-Powered <span class="gradient-text">YouTube Video</span><br />
                 Analysis & Insights
             </h1>
-            
             <p>
-                Extract key insights, summaries, and actionable data from any YouTube video using advanced AI technology. Get comprehensive analysis in seconds.
+                Extract key insights, summaries, and actionable data from any YouTube video using AI.
             </p>
-            
+
             <div class="input-section">
-                <input type="url" class="url-input" placeholder="Paste YouTube video URL here...">
+                <input type="url" class="url-input" placeholder="Paste YouTube video URL here..." />
                 <button class="analyze-btn">Analyze Video</button>
             </div>
         </section>
 
-        <section class="features">
-            <div class="feature-card">
-                <div class="feature-icon">🎯</div>
-                <h3>Content Summary</h3>
-                <p>Get concise summaries of video content with key points, main topics, and important timestamps highlighted for quick reference.</p>
-            </div>
-            
-            <div class="feature-card">
-                <div class="feature-icon">📊</div>
-                <h3>Sentiment Analysis</h3>
-                <p>Analyze the emotional tone and sentiment of the video content to understand audience engagement and content effectiveness.</p>
-            </div>
-            
-            <div class="feature-card">
-                <div class="feature-icon">🔍</div>
-                <h3>Topic Extraction</h3>
-                <p>Automatically identify and categorize main topics, themes, and subjects discussed throughout the video content.</p>
-            </div>
-        </section>
+        <!-- Loading Section -->
+        <div id="loading" style="display:none; text-align:center; color:white;">Analyzing video...</div>
+
+        <!-- Results Section (needed for CSS to work) -->
+        <div class="results-container"></div>
+
+        <!-- Notification Containers -->
+        <div class="error-container"></div>
+        <div class="success-container"></div>
     </div>
 
-    <!-- Chat System Integration -->
+    <!-- Chat System -->
     <div class="chat-container hidden" id="chatContainer">
         <div class="chat-panel">
             <!-- Chat Header -->
             <div class="chat-header">
                 <div class="chat-title">AI Video Assistant</div>
                 <div class="chat-controls">
-                    <button class="chat-control-btn expand-btn" id="expandChatBtn" title="Expand to full screen">
-                        ⛶
-                    </button>
-                    <button class="chat-control-btn minimize-btn" id="minimizeChatBtn" title="Minimize to embedded">
-                        ▼
-                    </button>
-                    <button class="chat-control-btn close-btn" id="closeChatBtn" title="Close chat">
-                        ✕
-                    </button>
+                    <button class="chat-control-btn expand-btn" id="expandChatBtn">⛶</button>
+                    <button class="chat-control-btn minimize-btn" id="minimizeChatBtn">▼</button>
+                    <button class="chat-control-btn close-btn" id="closeChatBtn">✕</button>
                 </div>
             </div>
 
-            <!-- Chat Messages Area -->
-            <div class="chat-messages" id="chatMessages">
-                <!-- Welcome message will be inserted here -->
-            </div>
+            <!-- Chat Messages -->
+            <div class="chat-messages" id="chatMessages"></div>
 
             <!-- Chat Input Area -->
             <div class="chat-input-area">
-                <!-- Quick Action Buttons -->
                 <div class="quick-actions" id="quickActions">
-                    <button class="quick-action-btn" data-question="Summarize this video for me">
-                        📝 Summarize Video
-                    </button>
-                    <button class="quick-action-btn" data-question="What are the main topics discussed?">
-                        🎯 Main Topics
-                    </button>
-                    <button class="quick-action-btn" data-question="Give me the key takeaways">
-                        💡 Key Points
-                    </button>
+                    <button class="quick-action-btn" data-question="Summarize this video for me">📝 Summarize</button>
+                    <button class="quick-action-btn" data-question="Main topics of this video?">🎯 Main Topics</button>
+                    <button class="quick-action-btn" data-question="Key takeaways?">💡 Key Points</button>
                 </div>
 
-                <!-- Input Wrapper -->
                 <div class="chat-input-wrapper">
-                    <textarea 
-                        class="chat-input" 
-                        id="chatInput" 
-                        placeholder="Ask me anything about this video..."
-                        rows="1"
-                    ></textarea>
-                    <button class="chat-send-btn" id="chatSendBtn" disabled></button>
+                    <textarea id="chatInput" class="chat-input" placeholder="Ask anything about this video..." rows="1"></textarea>
+                    <button id="chatSendBtn" class="chat-send-btn" disabled></button>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- Chat Toggle Button - Shows when chat is hidden -->
+    <!-- Chat Toggle Button -->
     <button class="chat-toggle-btn" id="chatToggleBtn"></button>
 
+    <!-- Scripts -->
     <script src="app.js"></script>
 </body>
 </html>
