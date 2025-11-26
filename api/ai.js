@@ -7,7 +7,7 @@ const CONFIG = {
     MAX_DESCRIPTION_LENGTH: 10000, // characters
     RATE_LIMIT_REQUESTS: 10, // requests per window
     RATE_LIMIT_WINDOW: 60 * 1000, // 1 minute in milliseconds
-    GEMINI_MODEL: process.env.GEMINI_MODEL || 'gemini-1.5-flash',
+    GEMINI_MODEL: process.env.GEMINI_MODEL || 'gemini-2.5-flash',
     REQUEST_TIMEOUT: 30000, // 30 seconds
 };
 
@@ -316,3 +316,4 @@ if (requestType === 'summary') {
     }
 
 }
+
