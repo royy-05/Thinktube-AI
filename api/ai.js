@@ -197,7 +197,7 @@ if (description && !title && !analysisType) {
         const timeoutId = setTimeout(() => controller.abort(), CONFIG.REQUEST_TIMEOUT);
 
         const geminiResponse = await fetch(
-            `https://generativelanguage.googleapis.com/v1/models/${CONFIG.GEMINI_MODEL}:generateContent?key=${process.env.GEMINI_API_KEY}`,
+            `https://generativelanguage.googleapis.com/v1beta/models/${CONFIG.GEMINI_MODEL}:generateContent?key=${process.env.GEMINI_API_KEY}`,
             {
                 method: 'POST',
                 headers: { 
@@ -316,4 +316,5 @@ if (requestType === 'summary') {
     }
 
 }
+
 
