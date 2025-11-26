@@ -129,9 +129,13 @@ async function handleVideoAnalysis() {
 
 function displayVideo(videoData) {
   const snippet = videoData.video.snippet;
-  const thumbnail = snippet.thumbnails.high.url;
+  const thumbnail = snippet.thumbnails.high?.url || '';
 
-  document.querySelector('.results-container').innerHTML = `
+  const resultsContainer = document.querySelector('.results-container');
+  if (!resultsContainer) return showError("Missing .results-container in HTML");
+
+  // Create content safely
+  resultsContainer.innerHTML = `
     <div class="video-hero">
       <img src="${thumbnail}" class="video-thumbnail" />
       <h2>${snippet.title}</h2>
@@ -140,7 +144,6 @@ function displayVideo(videoData) {
     </div>
     <div id="aiSummaryContent">Generating AI summary...</div>
   `;
-}
 
 async function generateAISummaryAsync() {
   try {
@@ -208,6 +211,7 @@ document.addEventListener('DOMContentLoaded', () => {
       input.value = '';
     });
 });
+
 
 
 
